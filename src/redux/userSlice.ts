@@ -29,9 +29,6 @@ const userRegistrationSlice = createSlice({
     nextStep: (state) => {
       state.step += 1;
     },
-    prevStep: (state) => {
-      state.step -= 1;
-    },
     addFormData: (state) => {
       state.allFormData.push({
         ...state.formDataStep1,
@@ -45,7 +42,6 @@ export const {
   setFormDataStep1,
   setFormDataStep2,
   nextStep,
-  prevStep,
   addFormData,
 } = userRegistrationSlice.actions;
 

@@ -1,14 +1,11 @@
-// App.tsx
-
 import React from 'react';
-import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './redux/store';
 import { nextStep, prevStep, setFormDataStep1, setFormDataStep2 } from './redux/userSlice';
 import Step1Form from './Components/Step1Form';
 import Step2Form from './Components/Step2Form';
-import DataTables from './Components/DataTables';
-import { Button, AppBar, Tab, Tabs } from '@material-ui/core';
+import { AppBar, Tab, Tabs, Button } from '@material-ui/core';
 import UserDataTablePage from './Components/UserDataTablePage';
 
 const App: React.FC = () => {
@@ -17,27 +14,21 @@ const App: React.FC = () => {
     (state: RootState) => state.user
   );
 
-  const [navigateToUserData, setNavigateToUserData] = React.useState(false);
-
-  const handleStep1Submit = (data: any) => {
-    dispatch(setFormDataStep1(data));
+  const handleStep1Submit = () => {
+    dispatch(setFormDataStep1(formDataStep1));
     dispatch(nextStep());
   };
 
-  const handleStep2Submit = (data: any) => {
-    dispatch(setFormDataStep2(data));
-    // Set the flag to navigate to user-data
-    setNavigateToUserData(true);
+  const handleStep2Submit = () => {
+    dispatch(setFormDataStep2(formDataStep2));
   };
 
-  const handlePrevStep = () => {
-    dispatch(prevStep());
-  };
+  const activeTab = step === 1 ? 0 : step === 2 ? 1 : 0;
 
   return (
     <BrowserRouter>
       <AppBar position="static">
-        <Tabs>
+        <Tabs value={activeTab}>
           <Tab label="Home" to="/" component={Link} />
           <Tab label="User Data" to="/user-data" component={Link} />
         </Tabs>
@@ -46,12 +37,8 @@ const App: React.FC = () => {
       <Routes>
         <Route
           path="/"
-          element={(step === 1) ?
-            <Step1Form onSubmit={handleStep1Submit} /> :
-            <>
-              <Step2Form onSubmit={handleStep2Submit} />
-              {navigateToUserData && <Navigate to="/user-data" />}
-            </>
+          element={
+            step === 1 ? <Step1Form onSubmit={handleStep1Submit} /> : step === 2 ? <Step2Form  /> : null
           }
         />
         <Route path="/user-data" element={<UserDataTablePage />} />

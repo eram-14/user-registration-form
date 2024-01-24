@@ -13,11 +13,9 @@ import {
 } from '@mui/material';
 import { fetchCountries } from '../api/country';
 import { useDispatch } from 'react-redux';
-import { setFormDataStep2, nextStep, addFormData } from '../redux/userSlice';
+import { setFormDataStep2, addFormData } from '../redux/userSlice';
+import { Link } from 'react-router-dom';
 
-interface Step2Props {
-  onSubmit: SubmitHandler<any>;
-}
 
 const schema = yup.object().shape({
   address: yup.string().optional(),
@@ -27,15 +25,13 @@ const schema = yup.object().shape({
   pincode: yup.string().matches(/^\d+$/, 'Invalid Pincode').optional(),
 });
 
-const Step2: React.FC<Step2Props> = ({ onSubmit }) => {
+const Step2: React.FC = () => {
   const [countryOptions, setCountryOptions] = useState([]);
   const [country, setCountry] = useState('');
-
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
-
   const dispatch = useDispatch();
 
   const handleCountryChange = async (value: string) => {
@@ -44,11 +40,10 @@ const Step2: React.FC<Step2Props> = ({ onSubmit }) => {
     setCountry(value);
   };
 
-  const handleNext = (data: any) => {
-    data = { ...data, country: country }
+  const handleNext = async (data: any) => {
+    data = { ...data, country: country };
     dispatch(setFormDataStep2(data));
     dispatch(addFormData());
-    onSubmit(data);
   };
 
   return (
@@ -57,7 +52,7 @@ const Step2: React.FC<Step2Props> = ({ onSubmit }) => {
         <Typography variant="h5" gutterBottom>
           Step 2: Address Information
         </Typography>
-        <form onSubmit={handleSubmit(handleNext)}>
+        <form>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField label="Address" {...register('address')} fullWidth variant="outlined" />
@@ -70,7 +65,7 @@ const Step2: React.FC<Step2Props> = ({ onSubmit }) => {
             </Grid>
             <Grid item xs={12}>
               <Autocomplete
-                options={countryOptions} // Fetch dynamically based on user input
+                options={countryOptions}
                 freeSolo
                 onInputChange={(event, value) => handleCountryChange(value)}
                 renderInput={(params) => <TextField {...params} label="Country" fullWidth variant="outlined" />}
@@ -80,16 +75,18 @@ const Step2: React.FC<Step2Props> = ({ onSubmit }) => {
               <TextField label="Pincode" {...register('pincode')} fullWidth variant="outlined" />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ marginTop: 2 }}
-            disabled={!formState.isValid}
-          >
-            Submit
-          </Button>
+          <Link to="/user-data" style={{ textDecoration: 'none', width: '100%' }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: 2 }}
+              onClick={() => handleSubmit(handleNext)()}
+              disabled={!formState.isValid}
+            >
+              Submit
+            </Button>
+          </Link>
         </form>
       </Paper>
     </Container>

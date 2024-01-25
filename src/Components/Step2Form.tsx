@@ -16,7 +16,6 @@ import { useDispatch } from 'react-redux';
 import { setFormDataStep2, addFormData } from '../redux/userSlice';
 import { Link } from 'react-router-dom';
 
-
 const schema = yup.object().shape({
   address: yup.string().optional(),
   state: yup.string().optional(),
@@ -40,14 +39,14 @@ const Step2: React.FC = () => {
     setCountry(value);
   };
 
-  const handleNext = async (data: any) => {
+  const handleNext: SubmitHandler<any> = async (data) => {
     data = { ...data, country: country };
     dispatch(setFormDataStep2(data));
     dispatch(addFormData());
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md" sx={{ padding: 4, marginTop: 4 }}>
       <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h5" gutterBottom>
           Step 2: Address Information
@@ -80,7 +79,7 @@ const Step2: React.FC = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: 2 }}
+              sx={{ marginTop: '1rem', width: '100%', backgroundColor: 'teal', color: 'white', '&:hover': { backgroundColor: 'teal' } }}
               onClick={() => handleSubmit(handleNext)()}
               disabled={!formState.isValid}
             >

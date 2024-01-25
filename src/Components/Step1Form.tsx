@@ -12,7 +12,6 @@ import {
   Paper,
   Container,
   FormControl,
-  FormHelperText,
   InputLabel,
   Box,
 } from '@mui/material';
@@ -56,7 +55,7 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md" sx={{ marginTop: 4 }}>
       <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h5" gutterBottom>
           Personal Information
@@ -126,6 +125,7 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
               color="primary"
               fullWidth
               disabled={!formState.isValid}
+              sx={{ backgroundColor: 'teal', color: 'white', '&:hover': { backgroundColor: 'teal' } }}
             >
               Next
             </Button>

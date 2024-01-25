@@ -7,6 +7,7 @@ import Step1Form from './Components/Step1Form';
 import Step2Form from './Components/Step2Form';
 import { AppBar, Tab, Tabs, Button } from '@material-ui/core';
 import UserDataTablePage from './Components/UserDataTablePage';
+import Navbar from './Components/Navbar';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,13 +28,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <AppBar position="static">
-        <Tabs value={activeTab}>
-          <Tab label="Home" to="/" component={Link} />
-          <Tab label="User Data" to="/user-data" component={Link} />
-        </Tabs>
-      </AppBar>
-
+      <Navbar/>
       <Routes>
         <Route
           path="/"

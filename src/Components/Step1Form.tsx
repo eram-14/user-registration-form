@@ -14,6 +14,7 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  Box,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { setFormDataStep1, nextStep } from '../redux/userSlice';
@@ -48,6 +49,7 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
     mode: 'onChange',
   });
   const dispatch = useDispatch();
+
   const handleNext = async (data: any) => {
     dispatch(setFormDataStep1(data));
     dispatch(nextStep());
@@ -87,7 +89,6 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
                 </Select>
-                <FormHelperText>{formState.errors.sex?.message}</FormHelperText>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -106,7 +107,6 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
                   <MenuItem value="Aadhar">Aadhar</MenuItem>
                   <MenuItem value="PAN">PAN</MenuItem>
                 </Select>
-                <FormHelperText>{formState.errors.id_type?.message}</FormHelperText>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -119,16 +119,17 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ marginTop: 2 }}
-            disabled={!formState.isValid}
-          >
-            Next
-          </Button>
+          <Box mt={2}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={!formState.isValid}
+            >
+              Next
+            </Button>
+          </Box>
         </form>
       </Paper>
     </Container>
@@ -136,4 +137,3 @@ const Step1Form: React.FC<Step1Props> = ({ onSubmit }) => {
 };
 
 export default Step1Form;
-

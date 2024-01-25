@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import $ from 'jquery';
 import 'datatables.net';
@@ -9,8 +9,10 @@ const USER_DATA_KEY = 'userFormData';
 const DataTables: React.FC = () => {
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const storedData = sessionStorage.getItem(USER_DATA_KEY);
-  const sessionData: any[] = storedData ? JSON.parse(storedData) : [];
+  const sessionData: any[] = useMemo(() => {
+    const storedData = sessionStorage.getItem(USER_DATA_KEY);
+    return storedData ? JSON.parse(storedData) : [];
+  }, []);
 
   useEffect(() => {
     if (tableRef.current) {

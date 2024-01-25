@@ -35,10 +35,8 @@ const userRegistrationSlice = createSlice({
         ...state.formDataStep2,
       };
 
-      // Store in the array
       state.allFormData.push(userData);
 
-      // Store in session storage
       const storedData = sessionStorage.getItem(USER_DATA_KEY);
       let storedArray: any[] = [];
 

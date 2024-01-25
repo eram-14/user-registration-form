@@ -12,8 +12,7 @@ const UserDataTablePage: React.FC = () => {
   }, [formDataStep1, formDataStep2]);
 
   return (
-    <div>
-      <h2>User Data Table</h2>
+    <div style={{ margin: '20px', padding: '20px' }}>
       <DataTables data={dataTableData} />
     </div>
   );

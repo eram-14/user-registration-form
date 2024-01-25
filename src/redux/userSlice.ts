@@ -33,6 +33,11 @@ const userRegistrationSlice = createSlice({
         ...state.formDataStep2,
       });
     },
+    resetForm: (state) => {
+      state.step = 1;
+      state.formDataStep1 = {};
+      state.formDataStep2 = {};
+    },
   },
 });
 
@@ -41,6 +46,7 @@ export const {
   setFormDataStep2,
   nextStep,
   addFormData,
+  resetForm,
 } = userRegistrationSlice.actions;
 
 export default userRegistrationSlice.reducer;

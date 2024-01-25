@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { fetchCountries } from '../api/country';
 import { useDispatch } from 'react-redux';
-import { setFormDataStep2, addFormData } from '../redux/userSlice';
+import { setFormDataStep2, addFormData, resetForm } from '../redux/userSlice';
 import { Link } from 'react-router-dom';
 
 const schema = yup.object().shape({
@@ -43,6 +43,7 @@ const Step2: React.FC = () => {
     data = { ...data, country: country };
     dispatch(setFormDataStep2(data));
     dispatch(addFormData());
+    dispatch(resetForm());
   };
 
   return (

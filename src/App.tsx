@@ -5,9 +5,8 @@ import { RootState } from './redux/store';
 import { nextStep, setFormDataStep1, setFormDataStep2 } from './redux/userSlice';
 import Step1Form from './Components/Step1Form';
 import Step2Form from './Components/Step2Form';
-import { AppBar, Tab, Tabs, Button } from '@material-ui/core';
-import UserDataTablePage from './Components/UserDataTablePage';
 import Navbar from './Components/Navbar';
+import DataTables from './Components/DataTables';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,15 +19,9 @@ const App: React.FC = () => {
     dispatch(nextStep());
   };
 
-  const handleStep2Submit = () => {
-    dispatch(setFormDataStep2(formDataStep2));
-  };
-
-  const activeTab = step === 1 ? 0 : step === 2 ? 1 : 0;
-
   return (
     <BrowserRouter>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -36,7 +29,7 @@ const App: React.FC = () => {
             step === 1 ? <Step1Form onSubmit={handleStep1Submit} /> : step === 2 ? <Step2Form /> : null
           }
         />
-        <Route path="/user-data" element={<UserDataTablePage />} />
+        <Route path="/user-data" element={<DataTables />} />
       </Routes>
     </BrowserRouter>
   );

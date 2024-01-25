@@ -1,24 +1,22 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt/css/jquery.dataTables.css';
 
-interface DataTablesProps {
-  data: any[];
-}
+const USER_DATA_KEY = 'userFormData';
 
-const DataTables: React.FC<DataTablesProps> = ({ data }) => {
-  const allFormData = useSelector((state: RootState) => state.user.allFormData);
+const DataTables: React.FC = () => {
   const tableRef = useRef<HTMLTableElement>(null);
+
+  const storedData = sessionStorage.getItem(USER_DATA_KEY);
+  const sessionData: any[] = storedData ? JSON.parse(storedData) : [];
 
   useEffect(() => {
     if (tableRef.current) {
       $(tableRef.current).DataTable();
     }
-  }, [allFormData]);
+  }, [sessionData]);
 
   const columns = [
     'Name',
@@ -35,24 +33,32 @@ const DataTables: React.FC<DataTablesProps> = ({ data }) => {
   ];
 
   return (
-    <TableContainer component={Paper}>
-      <Table ref={tableRef}>
-        <TableHead>
-          <TableRow>
-            {columns.map((column) => <TableCell key={column}>{column}</TableCell>)}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {allFormData.map((formData, index) => (
-            <TableRow key={index}>
+    <div style={{ margin: '20px', padding: '20px' }}>
+      <TableContainer component={Paper}>
+        <Table ref={tableRef}>
+          <TableHead>
+            <TableRow>
               {columns.map((column) => (
-                <TableCell key={column}>{formData[column.toLowerCase().replaceAll(' ', '_')]}</TableCell>
+                <TableCell key={column} sx={{ padding: '10px', background: '#19caca' }}>
+                  {column}
+                </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {sessionData.map((formData, index) => (
+              <TableRow key={index}>
+                {columns.map((column) => (
+                  <TableCell sx={{ padding: '1rem !important' }} key={column} >
+                    {formData[column.toLowerCase().replaceAll(' ', '_')]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

@@ -23,7 +23,9 @@ interface Step1Props {
 }
 
 const schema = yup.object().shape({
-  name: yup.string().required('Name is required').min(3, 'Name must be at least 3 characters'),
+  name: yup.string().required('Name is required')
+    .matches(/^[a-zA-Z\s]+$/, 'Name must contain only letters')
+    .min(3, 'Name must be at least 3 characters'),
   age: yup.number().required('Age is required').positive('Age must be a positive integer'),
   sex: yup.string().required('Sex is required').oneOf(['Male', 'Female'], 'Invalid sex'),
   mobile: yup.string().required('Mobile is required').matches(/^[6-9]\d{9}$/, 'Invalid mobile number'),

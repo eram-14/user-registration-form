@@ -14,6 +14,8 @@ const initialState: UserRegistrationState = {
   allFormData: [],
 };
 
+const USER_DATA_KEY = 'userFormData';
+
 const userRegistrationSlice = createSlice({
   name: 'userRegistration',
   initialState,
@@ -28,10 +30,24 @@ const userRegistrationSlice = createSlice({
       state.step += 1;
     },
     addFormData: (state) => {
-      state.allFormData.push({
+      const userData = {
         ...state.formDataStep1,
         ...state.formDataStep2,
-      });
+      };
+
+      // Store in the array
+      state.allFormData.push(userData);
+
+      // Store in session storage
+      const storedData = sessionStorage.getItem(USER_DATA_KEY);
+      let storedArray: any[] = [];
+
+      if (storedData) {
+        storedArray = JSON.parse(storedData);
+      }
+
+      storedArray.push(userData);
+      sessionStorage.setItem(USER_DATA_KEY, JSON.stringify(storedArray));
     },
     resetForm: (state) => {
       state.step = 1;
